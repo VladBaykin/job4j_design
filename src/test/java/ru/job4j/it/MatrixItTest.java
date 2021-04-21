@@ -80,7 +80,6 @@ public class MatrixItTest {
         };
         MatrixIt it = new MatrixIt(in);
         assertTrue(it.hasNext());
-        assertTrue(it.hasNext());
     }
 
     @Test

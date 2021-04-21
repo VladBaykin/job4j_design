@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.is;
 
 public class BackwardArrayItTest {
 
@@ -13,15 +12,14 @@ public class BackwardArrayItTest {
     public void whenMultiCallHasNextThenTrue() {
         BackwardArrayIt it = new BackwardArrayIt(new int[] {1, 2, 3});
         assertTrue(it.hasNext());
-        assertTrue(it.hasNext());
     }
 
     @Test
     public void whenReadSequence() {
         BackwardArrayIt it = new BackwardArrayIt(new int[] {1, 2, 3});
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(1));
+        assertEquals((Integer) 3, it.next());
+        assertEquals((Integer) 2, it.next());
+        assertEquals((Integer) 1, it.next());
     }
 
     @Test(expected = NoSuchElementException.class)

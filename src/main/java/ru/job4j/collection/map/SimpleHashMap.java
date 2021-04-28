@@ -34,7 +34,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
 
     public V get(K key) {
         int i = getIndex(key);
-        if (table[i] != null) {
+        if (table[i] != null && table[i].key.equals(key)) {
             return table[i].value;
         }
         return null;
@@ -42,7 +42,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
 
     public boolean delete(K key) {
         int i = getIndex(key);
-        if (table[i] != null) {
+        if (table[i] != null && table[i].key.equals(key)) {
             table[i] = null;
             size--;
             modCount++;

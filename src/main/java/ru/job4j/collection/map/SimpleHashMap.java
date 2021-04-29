@@ -9,6 +9,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     private int size = 0;
     private int capacity = 16;
     private int modCount = 0;
+    private final float LOAD_FACTOR = 0.75f;
 
     public SimpleHashMap() {
         table = new Node[capacity];
@@ -18,7 +19,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     }
 
     public boolean insert(K key, V value) {
-        if (table.length >= 0.75 * capacity) {
+        if (table.length >= LOAD_FACTOR * capacity) {
             resize();
         }
         int i = getIndex(key);
@@ -102,7 +103,10 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
 
             @Override
             public boolean hasNext() {
-                return count < size;
+                while (count < capacity && table[count] == null) {
+                    count++;
+                }
+                return count < capacity;
             }
 
             @Override
@@ -113,7 +117,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return table[count++].key;
+                return table[count].key;
             }
         };
     }

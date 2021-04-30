@@ -23,7 +23,7 @@ public class Analyze {
         }
         for (User user : previous) {
             if (currentMap.containsKey(user.id)) {
-                if (!Objects.equals(user.name, currentMap.get(user.id))){
+                if (!Objects.equals(user.name, currentMap.get(user.id))) {
                     info.changed++;
                 }
             } else {

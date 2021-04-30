@@ -5,11 +5,11 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
-    private Object[] array;
+    private T[] array;
     private int sizeArray = 0;
 
     public SimpleArray(int size) {
-        this.array = new Object[size];
+        this.array = (T[]) new Object[size];
     }
 
     public void add(T model) {
@@ -30,7 +30,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public T get(int index) {
         Objects.checkIndex(index, sizeArray);
-        return (T) array[index];
+        return array[index];
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
             }
-                return (T) array[point++];
+                return array[point++];
             }
         };
     }

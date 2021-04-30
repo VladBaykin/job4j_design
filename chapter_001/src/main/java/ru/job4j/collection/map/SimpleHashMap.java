@@ -9,7 +9,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     private int size = 0;
     private int capacity = 16;
     private int modCount = 0;
-    private final float LOAD_FACTOR = 0.75f;
+    static final float LOAD_FACTOR = 0.75f;
 
     public SimpleHashMap() {
         table = new Node[capacity];
@@ -23,8 +23,8 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
             resize();
         }
         int i = getIndex(key);
-        if (table[i] == null ||
-                (table[i].key == key || table[i].key.equals(key))) {
+        if (table[i] == null
+                || (table[i].key == key || table[i].key.equals(key))) {
             table[i] = new Node<>(getHash(key), key, value, null);
             size++;
             modCount++;
@@ -69,8 +69,10 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     }
 
     private int getHash(K key) {
-        int h;
-        return  (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+        /*int h;
+        return  (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);*/
+        int h = key.hashCode();
+        return h ^ h >>> 16;
     }
 
     static class Node<K, V> {

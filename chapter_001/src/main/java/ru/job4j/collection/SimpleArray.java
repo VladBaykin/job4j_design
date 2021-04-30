@@ -3,16 +3,16 @@ package ru.job4j.collection;
 import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
-    private Object[] container;
+    private T[] container;
     private int size = 0;
     private int modCount = 0;
 
     public SimpleArray() {
-        this.container = new Object[10];
+        this.container = (T[]) new Object[10];
     }
 
     public SimpleArray(int size) {
-        this.container = new Object[size];
+        this.container = (T[]) new Object[size];
     }
 
     public T get(int index) {
@@ -23,7 +23,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public void add(T model) {
         modCount++;
         if (container.length == size) {
-            container = grow();
+            container = (T[]) grow();
         }
         container[size++] = model;
     }
@@ -36,7 +36,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<>() {
             private int count = 0;
-            private int expectedModCount  = modCount;
+            private final int expectedModCount  = modCount;
 
             @Override
             public boolean hasNext() {
@@ -51,7 +51,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (T) container[count++];
+                return container[count++];
             }
         };
     }

@@ -19,7 +19,8 @@ public class Config {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             reader.lines()
                     .filter(s -> !s.isEmpty() && !s.startsWith("#"))
-                    .forEach(s -> values.put(getPair(s)[0], getPair(s)[1]));
+                    .map(Config::getPair)
+                    .forEach(s -> values.put(s[0], s[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }

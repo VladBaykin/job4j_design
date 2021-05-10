@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class Config {
     private final String path;
-    private final Map<String, String> values = new HashMap<>();
+    private Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
@@ -17,10 +18,10 @@ public class Config {
 
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            reader.lines()
+            values = reader.lines()
                     .filter(s -> !s.isEmpty() && !s.startsWith("#"))
                     .map(Config::getPair)
-                    .forEach(s -> values.put(s[0], s[1]));
+                    .collect(Collectors.toMap(str -> str[0], str -> str[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }

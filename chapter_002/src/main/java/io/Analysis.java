@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Analysis {
     public void unavailable(String source, String target) {
-        try (BufferedReader in = new BufferedReader(new FileReader(source));
-             PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            List<String> lines = load(in);
-            lines.forEach(out::println);
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+            lines = load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        writeTarget(lines, target);
     }
 
     private List<String> load(BufferedReader reader) throws IOException {
@@ -33,5 +33,13 @@ public class Analysis {
             }
         }
         return result;
+    }
+
+    public void writeTarget(List<String> lines, String target) {
+        try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
+            lines.forEach(out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

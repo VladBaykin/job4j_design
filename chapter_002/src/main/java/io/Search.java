@@ -9,11 +9,9 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        if (args[0] == null) {
-            throw new IllegalArgumentException("Root folder is null");
-        }
-        if (args[1] == null) {
-            throw new IllegalArgumentException("File extension is null");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Required arguments not found. "
+                    + "Choose root folder and file extension in params");
         }
         Path start = Paths.get(args[0]);
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);

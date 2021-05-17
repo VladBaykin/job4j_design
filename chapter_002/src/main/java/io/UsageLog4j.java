@@ -15,17 +15,15 @@ public class UsageLog4j {
         double f = 6;
         char g = '7';
         boolean h = true;
-        LOG.debug("""
-                primitives:\s
-                byte a = {}
-                short b = {}
-                int c = {}
-                long d = {}
-                float e = {}
-                double f = {}
-                char g = {}
-                boolean h = {}
-                """, a, b, c, d, e, f, g, h);
+        LOG.debug("primitives:\n"
+                + "byte a = {}\n"
+                + "short b = {}\n"
+                + "int c = {}\n"
+                + "long d = {}\n"
+                + "float e = {}\n"
+                + "double f = {}\n"
+                + "char g = {}\n"
+                + "boolean h = {}\n", a, b, c, d, e, f, g, h);
 
     }
 }

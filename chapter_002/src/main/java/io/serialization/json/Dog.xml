@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<dog sex="true" age="2">
+    <contactOwn phone="+7983"/>
+    <commandses>
+        <commands>sit</commands>
+        <commands>vote</commands>
+    </commandses>
+</dog>

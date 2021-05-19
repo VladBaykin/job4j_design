@@ -1,15 +1,30 @@
 package io.serialization.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
 
+@XmlRootElement(name = "dog")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Dog {
-    private final boolean sex;
-    private final int age;
-    private final Contact contactOwn;
-    private final String[] commands;
+
+    @XmlAttribute
+    private boolean sex;
+
+    @XmlAttribute
+    private int age;
+    private Contact contactOwn;
+    private String[] commands;
+
+    public Dog() {
+    }
 
     public Dog(boolean sex, int age, Contact contactOwn, String... commands) {
         this.sex = sex;
@@ -28,22 +43,23 @@ public class Dog {
                 + '}';
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         final Dog dog = new Dog(true, 2, new Contact("+7983"), "sit", "vote");
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(dog));
-        final String gsonDog =
-                "{"
-                        + "\"sex\":true,"
-                        + "\"age\":2,"
-                        + "\"contactOwn\":"
-                            + "{"
-                                + "\"phone\":\"+7(924)111-111-11-11\""
-                            + "},"
-                        + "\"commands\":"
-                        + "[\"sit\",\"vote\"]"
-                        + "}";
-        final Dog dogMod = gson.fromJson(gsonDog, Dog.class);
-        System.out.println(dogMod);
+        JAXBContext context = JAXBContext.newInstance(Dog.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+        String xml;
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(dog, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
+
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Dog result = (Dog) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
     }
 }

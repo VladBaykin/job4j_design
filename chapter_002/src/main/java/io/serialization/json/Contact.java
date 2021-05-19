@@ -1,7 +1,17 @@
 package io.serialization.json;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import com.sun.xml.txw2.annotation.XmlElement;
+
+
+@XmlElement(value = "contact")
 public class Contact {
-    private final String phone;
+
+    @XmlAttribute
+    private String phone;
+
+    public Contact() {
+    }
 
     public Contact(String phone) {
         this.phone = phone;
